@@ -603,6 +603,102 @@
         color: #01524b;
       }
 
+      /* FAQ + Contact */
+      .faq-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      details.faq-item {
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid #e8dfd2;
+        padding: 14px 16px;
+        box-shadow: 0 14px 24px rgba(35, 34, 31, 0.06);
+      }
+
+      details.faq-item summary {
+        cursor: pointer;
+        list-style: none;
+        font-weight: 800;
+        color: #243240;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      details.faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+
+      details.faq-item summary::after {
+        content: "＋";
+        font-weight: 900;
+        color: var(--primary);
+      }
+
+      details.faq-item[open] summary::after {
+        content: "－";
+      }
+
+      details.faq-item .faq-body {
+        margin-top: 10px;
+        color: var(--ink-soft);
+        line-height: 1.75;
+        font-size: 0.95rem;
+      }
+
+      .contact-card {
+        border-radius: 28px;
+        padding: 26px 22px;
+        background: linear-gradient(180deg, #fffef8 0%, #fff7ee 100%);
+        border: 1px solid #f0e2cf;
+        box-shadow: 0 18px 30px rgba(54, 42, 24, 0.08);
+        display: grid;
+        gap: 14px;
+      }
+
+      .contact-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .contact-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: #ffffff;
+        border: 1px solid #f2e6d6;
+        color: #395060;
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+
+      .link-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 12px 16px;
+        font-weight: 800;
+        font-size: 14px;
+        border: 1px solid #cfeeea;
+        background: #eaf8f5;
+        color: #006a60;
+      }
+
+      .link-btn:hover {
+        filter: brightness(0.98);
+      }
+
       footer {
         text-align: center;
         color: #677788;
@@ -644,7 +740,8 @@
       @media (max-width: 980px) {
         .hero,
         .feature-grid,
-        .optimizer {
+        .optimizer,
+        .faq-grid {
           grid-template-columns: 1fr;
         }
 
@@ -662,6 +759,7 @@
           width: 100%;
           order: 3;
           justify-content: space-between;
+          flex-wrap: wrap;
         }
       }
 
@@ -675,6 +773,14 @@
         }
 
         .topbar-cta {
+          width: 100%;
+        }
+
+        .contact-row {
+          align-items: stretch;
+        }
+
+        .link-btn {
           width: 100%;
         }
       }
@@ -695,8 +801,12 @@
           <a href="#features">핵심 기능</a>
           <a href="#optimizer">최적화 엔진</a>
           <a href="#schedule">스케줄 UI</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">문의하기</a>
         </nav>
-        <button class="topbar-cta">유료로 시작하기</button>
+        <button class="topbar-cta" onclick="document.querySelector('#contact')?.scrollIntoView({behavior:'smooth', block:'start'})">
+          유료로 시작하기
+        </button>
       </div>
     </header>
 
@@ -714,6 +824,7 @@
           <div class="hero-actions">
             <a class="btn btn-primary" href="#optimizer">최적화 방식 보기</a>
             <a class="btn btn-ghost" href="#schedule">타임라인 미리보기</a>
+            <a class="btn btn-ghost" href="#contact">피드백/문의</a>
           </div>
           <div class="hero-stats">
             <div class="stat">
@@ -895,7 +1006,97 @@
           RoadTrip은 일정 생성부터 동선 최적화, 비용 계산, 지도 기반 확인까지
           여행 준비 전체를 한 번에 연결합니다.
         </p>
-        <a class="btn" href="#">지금 RoadTrip 시작하기</a>
+        <a class="btn" href="#contact">지금 RoadTrip 시작하기</a>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="section reveal">
+        <div class="section-head">
+          <h2>FAQ</h2>
+          <p>
+            자주 묻는 질문을 모았습니다. 원하는 답이 없으면 아래 문의하기에서 바로
+            남겨주세요.
+          </p>
+        </div>
+
+        <div class="faq-grid">
+          <details class="faq-item">
+            <summary>Lock과 Pin의 차이가 뭔가요?</summary>
+            <div class="faq-body">
+              <strong>Lock</strong>은 일정의 <strong>날짜/순서 자체를 고정</strong>합니다.
+              <strong>Pin</strong>은 특정 장소의 <strong>시간(예: 10:00)을 고정</strong>하고,
+              그 전후 일정만 최적화가 가능한 상태로 두는 방식입니다.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>최적화는 어떤 기준으로 동선을 바꾸나요?</summary>
+            <div class="faq-body">
+              Lock/Pin으로 보호된 일정은 유지하고, 나머지 일정은
+              <strong>이동 시간/거리</strong>를 최소화하는 방향으로 재배치합니다.
+              (실제 이동 수단/시간 데이터 반영 방식은 버전에 따라 달라질 수 있어요.)
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>여행 비용은 어떻게 계산되나요?</summary>
+            <div class="faq-body">
+              장소별 예상 비용(입장료/식비 등)과 이동 비용(택시/대중교통 추정)을
+              합산해 <strong>일별/전체</strong>로 보여줍니다. 추후 영수증 기반 정산/공유 기능도 확장 가능합니다.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>장소가 많아도 자동으로 계획이 가능한가요?</summary>
+            <div class="faq-body">
+              가능합니다. 다만 장소 수가 많아질수록 최적화 계산량이 늘어날 수 있어
+              핵심 장소부터 계획하는 것을 추천합니다.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>내 일정 데이터는 안전하게 보관되나요?</summary>
+            <div class="faq-body">
+              민감한 개인정보는 최소화하고, 필요한 범위에서만 저장하도록 설계할 수 있습니다.
+              운영 정책/보관 기간 등은 서비스 정책 페이지에서 명확히 인지하시는 것을 권장합니다.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>버그/오류/개선 요청은 어디로 보내면 되나요?</summary>
+            <div class="faq-body">
+              아래 <strong>문의하기</strong>에서 폼으로 남겨주시면 가장 빠르게 확인할 수 있어요.
+              긴 내용이나 파일이 있다면 이메일로도 보내주세요.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Contact / Feedback -->
+      <section id="contact" class="section reveal">
+        <div class="section-head">
+          <h2>피드백 · 문의 · 소통</h2>
+          <p>
+            RoadTrip 개선을 위해 의견을 기다리고 있어요. 기능 제안, 버그 제보, 협업 문의까지 편하게 남겨주세요.
+          </p>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-row">
+            <div class="contact-pill">📩 이메일: <a href="mailto:endlessloop9910@gmail.com"><strong>endlessloop9910@gmail.com</strong></a></div>
+            <a
+              class="link-btn"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSd81W-GTQGA2ZQZ3GHxmVUSclRfWseKIGxb9lMmLnaFQlwuKw/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📝 피드백 폼 열기
+            </a>
+          </div>
+          <div style="color:#556776; line-height:1.7; font-size:0.95rem;">
+            <strong>추천 작성 항목</strong> : 사용 기기(iOS 버전), 재현 방법(1~3단계), 기대 동작/실제 동작, 스크린샷(가능하면)
+          </div>
+        </div>
       </section>
     </main>
 
